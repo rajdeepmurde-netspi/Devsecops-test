@@ -4,7 +4,7 @@ services:
   app:
     build: .
     ports:
-      - "5000:5000"
+      - "5001:5001"
 
   sonarqube:
     image: sonarqube:latest
@@ -18,5 +18,16 @@ services:
   db:
     image: postgres
     environment:
-      - POSTGRES_USER=sonar
-      - POSTGRES_PASSWORD=sonar
+      POSTGRES_USER: sonar
+      POSTGRES_PASSWORD: sonar
+
+  jenkins:
+    image: jenkins/jenkins:lts
+    ports:
+      - "8080:8080"
+      - "50000:50000"
+    volumes:
+      - jenkins_home:/var/jenkins_home
+
+volumes:
+  jenkins_home:
