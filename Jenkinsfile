@@ -12,11 +12,11 @@ pipeline {
             }
         }
 
-        stage('Install Dependencies') {
-            steps {
-                sh 'pip install -r app/requirements.txt'
+        //stage('Install Dependencies') {
+          //  steps {
+            //    sh 'pip install -r app/requirements.txt'
               
-            }
+            //}
         }
 
         stage('Run Lint') {
