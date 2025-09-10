@@ -15,7 +15,8 @@ pipeline {
 
         stage('Install Requirements') {
             steps {
-                sh 'apt install python3-flask'
+                sh "echo 'test'"
+                //sh 'apt install python3-flask'
             }
         }
 
