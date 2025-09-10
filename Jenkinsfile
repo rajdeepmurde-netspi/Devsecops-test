@@ -17,7 +17,7 @@ pipeline {
             //    sh 'pip install -r app/requirements.txt'
               
             //}
-        }
+        //}
 
         stage('Run Lint') {
             steps {
