@@ -16,7 +16,7 @@ pipeline {
             steps {
                // sh 'pipx install  requirements.txt'
                 
-                sh 'sudo apt install flask8 -y'
+                //sh 'sudo apt install flask8 -y'
               
             }
         }
