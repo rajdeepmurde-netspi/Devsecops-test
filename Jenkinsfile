@@ -14,7 +14,8 @@ pipeline {
 
         stage('Install Dependencies') {
             steps {
-                sh 'pipx install  requirements.txt'
+               // sh 'pipx install  requirements.txt'
+                sh 'apt install flask8 -y'
               
             }
         }
