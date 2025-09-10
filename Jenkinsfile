@@ -3,32 +3,29 @@ pipeline {
 
     environment {
         SONARQUBE_SERVER = 'SonarQube'
+        DOCKER_IMAGE = 'python-devsecops'
     }
 
     stages {
         stage('Checkout') {
             steps {
-                git url: 'https://github.com/rajdeepmurde-netspi/Devsecops-test.git', branch: 'main'
+                checkout scm
             }
         }
 
-        stage('Install Dependencies') {
+        stage('Install Requirements') {
             steps {
-                sh 'echo "test"'
-               // sh 'pipx install  requirements.txt'
-                
-                //sh 'sudo apt install flask8 -y'
-              
+                sh 'pip install -r app/requirements.txt'
             }
         }
 
-        stage('Run Lint') {
+        stage('Lint') {
             steps {
                 sh 'flake8 app || true'
             }
         }
 
-        stage('SonarQube Analysis') {
+        stage('SonarQube Scan') {
             steps {
                 withSonarQubeEnv("${SONARQUBE_SERVER}") {
                     sh 'sonar-scanner'
@@ -38,25 +35,25 @@ pipeline {
 
         stage('Secrets Scan (Gitleaks)') {
             steps {
-                sh 'gitleaks detect --source . --no-git --config-path .gitleaks.toml || true'
+                sh 'gitleaks detect --source . --no-git || true'
             }
         }
 
-        stage('Build Docker Image') {
+        stage('Docker Build') {
             steps {
-                sh 'docker build -t python-devsecops .'
+                sh "docker build -t $DOCKER_IMAGE ."
             }
         }
 
-        stage('Scan Docker Image (Trivy)') {
+        stage('Trivy Scan') {
             steps {
-                sh 'trivy image --exit-code 0 --severity HIGH,CRITICAL python-devsecops'
+                sh "trivy image --exit-code 0 --severity CRITICAL,HIGH $DOCKER_IMAGE"
             }
         }
 
         stage('Deploy') {
             steps {
-                echo 'Deploy step placeholder'
+                echo 'Deploy stage placeholder.'
             }
         }
     }
