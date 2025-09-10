@@ -15,13 +15,13 @@ pipeline {
 
         stage('Install Requirements') {
             steps {
-                sh 'pip install -r app/requirements.txt'
+                sh 'apt install python3-flask'
             }
         }
 
         stage('Lint') {
             steps {
-                sh 'flake8 app || true'
+                sh 'flake8 ./* || true'
             }
         }
 
